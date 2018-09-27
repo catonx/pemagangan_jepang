@@ -102,12 +102,21 @@ if(!empty($_SESSION['id_member']) && isset($_SESSION['id_member'])){
             echo '<script>window.location.href="#daftar"</script>';
   				}else{
   					$query = $db->query("insert into member(nama, hp, email, password) values('{$nama}', '{$hp}', '{$email}', '{$password1}')");
-  					if($query->errno){
+						// if ($query === TRUE){
+						// 	echo '<script>alert("Sampe!");</script>';
+						// 	var_dump($db->insert_id);
+						// 	header('location: app/');
+						// }
+						// die;
+						if($query->errno){
   						echo '<script>alert("Pendaftaran gagal!");</script>';
               echo '<script>window.location.href="#daftar"</script>';
   					}else{
-  						echo '<script>alert("Pendaftaran berhasil!\nSilahkan login dan Segera Lengkapi Biodata Anda");</script>';
-  						echo '<script>window.location.href="#login"</script>';
+							$_SESSION['id_member'] = $db->insert_id;
+							echo '<script>alert("Pendaftaran berhsil !");</script>';
+		          header('location: app/');
+
+		          // echo '<script>window.location.href="#daftar"</script>';
   					}
   				}
   			}else{
