@@ -120,70 +120,73 @@
     </div>
   </div>
 
-  <button class="btn btn-primary" name="simpan" onclick="return confirm('Simpan perubahan biodata?')">Simpan</button>
+  <button class="btn btn-primary" name="simpan" onclick="confirm('Simpan perubahan biodata?')">Simpan</button>
 </form>
 <?php
-if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
-  $id_member = $_POST['id_member'];
-  $nama_member = trim($_POST['nama']);
-  $kelamin = $_POST['kelamin'];
-  $agama = $_POST['agama'];
-  $tempat_lahir = trim($_POST['tempat_lahir']);
-  $tgl_lahir = trim($_POST['tgl_lahir']);
-  $hp = trim($_POST['hp']);
-  $alamat = trim($_POST['alamat']);
-	$provinsi = trim($_POST['provinsi']);
-	$th_pelaksanaan = trim($_POST['th_pelaksanaan']);
-  $fotolama = $_POST['fotolama'];
+  // echo "<pre>";
+  // var_dump($_POST);
+  // echo "</pre>";
+  if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
+    $id_member = $_POST['id_member'];
+    $nama_member = trim($_POST['nama']);
+    $kelamin = $_POST['kelamin'];
+    $agama = $_POST['agama'];
+    $tempat_lahir = trim($_POST['tempat_lahir']);
+    $tgl_lahir = trim($_POST['tgl_lahir']);
+    $hp = trim($_POST['hp']);
+    $alamat = trim($_POST['alamat']);
+  	$provinsi = trim($_POST['provinsi']);
+  	$th_pelaksanaan = trim($_POST['th_pelaksanaan']);
+    $fotolama = $_POST['fotolama'];
 
-	$foto = $_FILES['foto'];
-	$nm = $foto['name'];
-	$tmp = $foto['tmp_name'];
-	$tp = $foto['type'];
+  	$foto = $_FILES['foto'];
+  	$nm = $foto['name'];
+  	$tmp = $foto['tmp_name'];
+  	$tp = $foto['type'];
 
-	$dir = '../img/member/';
-	$nama = explode(".", $nm);
-	$eks = end($nama);
-	$rename = date('ymd_his').'.'.$eks;
-	$upload = $dir.$rename;
+  	$dir = '../img/member/';
+  	$nama = explode(".", $nm);
+  	$eks = end($nama);
+  	$rename = date('ymd_his').'.'.$eks;
+  	$upload = $dir.$rename;
 
-  if(!empty($nama_member) && !empty($kelamin) && !empty($agama) && !empty($tempat_lahir) && !empty($tgl_lahir) && !empty($hp) && !empty($alamat) && !empty($provinsi) && !empty($th_pelaksanaan)){
-		if(!empty($tmp)){
-      if($type == 'image/jpeg' || $type = 'image/jpg'){
-				if(move_uploaded_file($tmp, $upload)){
-          if(!empty($fotolama)){
-            unlink('../img/member/'.$member['foto']);
-          }
-					$sql = "update member set nama = '{$nama_member}', kelamin = '{$kelamin}', agama = '{$agama}', tempat_lahir = '{$tempat_lahir}',
-                  tgl_lahir = '{$tgl_lahir}', hp = '{$hp}', alamat = '{$alamat}', foto = '{$rename}', provinsi = '{$provinsi}', th_pelaksanaan = '{$th_pelaksanaan}' 
-                  where id_member = '{$id_member}' limit 1";
-					$query = $db->query($sql);
-					if($query->errno){
-						echo '<script>alert("Query error!\n('.$query->errno.') '.$query->error.'");</script>';
-					}else{
-						echo '<script>alert("Data berhasil disimpan!");</script>';
-						echo '<script>window.location.href="?page='.$page.'";</script>';
-					}
-				}else{
-					echo '<script>alert("Upload gagal!");</script>';
-				}
-			}else{
-				echo '<script>alert("Jenis gambar yang diijinkan hanya jpg!");</script>';
-			}
-		}else{
-      $sql = "update member set nama = '{$nama_member}', kelamin = '{$kelamin}', agama = '{$agama}', tempat_lahir = '{$tempat_lahir}',
-              tgl_lahir = '{$tgl_lahir}', hp = '{$hp}', alamat = '{$alamat}', provinsi = '{$provinsi}', th_pelaksanaan = '{$th_pelaksanaan}' 
-              where id_member = '{$id_member}' limit 1";
-			$query = $db->query($sql);
-			if($query->errno){
-				echo '<script>alert("Query error!\n('.$query->errno.') '.$query->error.'");</script>';
-			}else{
-				echo '<script>alert("Data berhasil disimpan!");</script>';
-				echo '<script>window.location.href="?page='.$page.'";</script>';
-			}
-		}
-	}else{
-		echo '<script>alert("Data belum lengkap!");</script>';
-	}
-}
+    if(!empty($nama_member) && !empty($kelamin) && !empty($agama) && !empty($tempat_lahir) && !empty($tgl_lahir) && !empty($hp) && !empty($alamat) && !empty($provinsi) && !empty($th_pelaksanaan)){
+  		if(!empty($tmp)){
+        if($type == 'image/jpeg' || $type = 'image/jpg'){
+  				if(move_uploaded_file($tmp, $upload)){
+            if(!empty($fotolama)){
+              unlink('../img/member/'.$member['foto']);
+            }
+  					$sql = "update member set nama = '{$nama_member}', kelamin = '{$kelamin}', agama = '{$agama}', tempat_lahir = '{$tempat_lahir}',
+                    tgl_lahir = '{$tgl_lahir}', hp = '{$hp}', alamat = '{$alamat}', foto = '{$rename}', provinsi = '{$provinsi}', th_pelaksanaan = '{$th_pelaksanaan}'
+                    where id_member = '{$id_member}' limit 1";
+  					$query = $db->query($sql);
+  					if($query->errno){
+  						echo '<script>alert("Query error!\n('.$query->errno.') '.$query->error.'");</script>';
+  					}else{
+  						echo '<script>alert("Data berhasil disimpan!");</script>';
+  						echo '<script>window.location.href="?page='.$page.'";</script>';
+  					}
+  				}else{
+  					echo '<script>alert("Upload gagal!");</script>';
+  				}
+  			}else{
+  				echo '<script>alert("Jenis gambar yang diijinkan hanya jpg!");</script>';
+  			}
+  		}else{
+        $sql = "update member set nama = '{$nama_member}', kelamin = '{$kelamin}', agama = '{$agama}', tempat_lahir = '{$tempat_lahir}',
+                tgl_lahir = '{$tgl_lahir}', hp = '{$hp}', alamat = '{$alamat}', provinsi = '{$provinsi}', th_pelaksanaan = '{$th_pelaksanaan}'
+                where id_member = '{$id_member}' limit 1";
+  			$query = $db->query($sql);
+  			if($query->errno){
+  				echo '<script>alert("Query error!\n('.$query->errno.') '.$query->error.'");</script>';
+  			}else{
+  				echo '<script>alert("Data berhasil disimpan!");</script>';
+  				echo '<script>window.location.href="?page='.$page.'";</script>';
+  			}
+  		}
+  	}else{
+  		echo '<script>alert("Data belum lengkap!");</script>';
+  	}
+  }
 ?>
