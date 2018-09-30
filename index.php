@@ -115,8 +115,6 @@ if(!empty($_SESSION['id_member']) && isset($_SESSION['id_member'])){
 							$_SESSION['id_member'] = $db->insert_id;
 							echo '<script>alert("Pendaftaran berhsil !");</script>';
 		          header('location: app/');
-
-		          // echo '<script>window.location.href="#daftar"</script>';
   					}
   				}
   			}else{
