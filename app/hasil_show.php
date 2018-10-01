@@ -17,11 +17,11 @@
 						(select count(*) from soal where id_kategori = k.id_kategori) jml_soal,
 						(select count(*) from jawaban j, soal s
 							where j.id_kategori = k.id_kategori and j.id_member = '{$_SESSION['id_member']}'
-							and j.id_soal = s.id_soal and j.jawaban = s.jawaban) jawaban_benar 
-						from kategori k where k.publish = 'Ya'
-						group by k.nama_kategori";
+							and j.id_soal = s.id_soal and j.jawaban = s.jawaban) jawaban_benar
+						from kategori k where k.publish = 'Ya'";
 		$query = $db->query($sql);
 		while($data = $query->fetch_assoc()){
+
 			echo '<tr>
 				<td class="text-center">'.$no.'.</td>
 				<td>'.$data['nama_kategori'].'</td>
