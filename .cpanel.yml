@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/user/project.bengkelkanopi.com/
-    - /bin/cp /. $DEPLOYPATH
+    - /bin/cp -a * $DEPLOYPATH
