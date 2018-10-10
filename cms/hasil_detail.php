@@ -96,6 +96,8 @@ if($_GET['detail_act']=='detail'){
 	?>
 	</tbody>
 </table>
+<hr />
+<a href="?page=hasil" class="btn btn-primary" ><i class="fa fa-caret-left"></i> Kembali</a>
 <?php
 }
 ?>
