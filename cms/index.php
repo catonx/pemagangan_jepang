@@ -20,8 +20,8 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'show';
     <title>Content Management System</title>
 
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../vendor/datatable/datatables.min.css" rel="stylesheet">
-    <link href="../vendor/datatable/DataTables-1.10.15/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="../vendor/datatable_old/datatables.min.css" rel="stylesheet">
+    <link href="../vendor/datatable_old/DataTables-1.10.15/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -69,7 +69,7 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'show';
 											'keluar'=>'Keluar'
 										);
 				}
-				
+
 				foreach($menuAr as $link=>$menu){
 					echo '<li class="nav-item"><a class="nav-link';
 					if($link == $page){ echo ' active'; }
@@ -95,11 +95,37 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'show';
 
     <script src="../vendor/jquery/jquery.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../vendor/datatable/datatables.min.js"></script>
-    <script src="../vendor/datatable/DataTables-1.10.15/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../vendor/datatable_old/datatables.min.js"></script>
+    <script src="../vendor/DataTables/datatables.min.js"></script>
+    <script src="../vendor/DataTables/TableTools.ShowSelectedOnly.js"></script>
+    <script src="../vendor/datatable_old/DataTables-1.10.15/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/filtering/row-based/TableTools.ShowSelectedOnly.js"></script>
 	<script>
 		$(document).ready(function() {
 			$('#datatable').DataTable();
+			$('#datatable-admin').DataTable( {
+					dom: 'Bfrtip',
+					buttons: [
+							'copyHtml5',
+							'excelHtml5',
+							'csvHtml5',
+							'pdfHtml5'
+					]
+
+			});
+			// $('#result').dataTable({
+		  // 	"sDom": 'T<"clear">Sfrtip',
+		  //   	"oTableTools": {
+		  //     	"sRowSelect": "multi",
+		  //     },
+		  //     "oLanguage": {
+		  //     	"oFilterSelectedOptions": {
+		  //       	AllText: "All Widgets",
+		  //         SelectedText: "Selected Widgets"
+		  //       }
+		  //     }
+		  // });
+
 		} );
 	</script>
     <script src="../vendor/tinymce/tinymce.min.js"></script>

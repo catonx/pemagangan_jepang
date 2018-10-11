@@ -1,6 +1,6 @@
 <?php echo '<div><a href="?page='.$page.'&act=add" class="btn btn-sm btn-warning" title="Tambah kategori"><span class="fa fa-plus-square fa-fw"></span> Tambah kategori</a></div>'; ?>
 <hr>
-<table id="datatable" class="table table-responsive table-striped table-bordered table-hover" width="100%" cellspacing="0">
+<table id="datatable-admin" class="table table-responsive table-striped table-bordered table-hover" width="100%" cellspacing="0">
 	<thead class="table-inverse">
 		<tr>
 			<th>No.</th>
