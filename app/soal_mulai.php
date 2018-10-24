@@ -1,8 +1,17 @@
 <?php
-$gettgl = $db->query("select * from jadwal where id_jadwal = '{$member['id_jadwal']}' limit 1");
+var_dump($member);
+$getresult = $db->query("select * from jawaban where id_member = '{$member['id_member']}'");
+$resultexist = $getresult->fetch_assoc();
+$gettgl = $db->query("select * from jadwal where id_jadwal = '{$member['id_jadwal']}' ");
 $tgljadwal = $gettgl->fetch_assoc();
 $tglmember = $tgljadwal['tgl'].' '.$tgljadwal['bln'].' '.$tgljadwal['thn'];
-if(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $tglmember != $tgl_now){
+if (!empty($resultexist)) {
+  echo '<div class="alert alert-info">
+  <p>Anda telah melakukan test.</p>
+  <a href="?page=hasil" class="btn btn-primary" ><i class="fa fa fa-check-square-o"></i> Lihat hasil tes </a>
+  </div>';
+}
+elseif(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $tglmember != $tgl_now){
   echo '<div class="alert alert-info">
   <p><i class="fa fa-fw fa-caret-right"></i>Silahkan lengkapi biodata dan tentukan jadwal tes terlebih dulu.</p>
 	<p><i class="fa fa-fw fa-caret-right"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
@@ -86,6 +95,7 @@ echo '<div class="card border-primary mb-3">
             <input type="hidden" name="id_soal_'.$no.'" value="'.$soal['id_soal'].'" />
             <input type="hidden" name="id_kategori_'.$no.'" value="'.$soal['id_kategori'].'" />
             <input type="hidden" name="id_member_'.$no.'" value="'.$_SESSION['id_member'].'" />
+            <input type="hidden" name="id_jadwal_'.$no.'" value="'.$member['id_jadwal'].'" />
             <input class="form-check-input" type="radio" name="jawaban_'.$no.'" value="A" required> '.$soal['pilihan_a'].'</br>
             <input class="form-check-input" type="radio" name="jawaban_'.$no.'" value="B" required> '.$soal['pilihan_b'].'</br>
             <input class="form-check-input" type="radio" name="jawaban_'.$no.'" value="C" required> '.$soal['pilihan_c'].'</br>
@@ -105,9 +115,10 @@ echo '<div class="card border-primary mb-3">
         $id_soal = $_POST['id_soal_'.$i];
         $id_kategori = $_POST['id_kategori_'.$i];
         $id_member = $_POST['id_member_'.$i];
+        $id_jadwal = $_POST['id_jadwal_'.$i];
         $jawaban = $_POST['jawaban_'.$i];
-        $sql_jawaban = "insert into jawaban(id_soal, id_kategori, id_member, jawaban)
-        values('{$id_soal}','{$id_kategori}','{$id_member}','{$jawaban}')";
+        $sql_jawaban = "insert into jawaban(id_soal, id_kategori, id_member, jawaban, id_jadwal)
+        values('{$id_soal}','{$id_kategori}','{$id_member}','{$jawaban}','{$id_jadwal}')";
         // echo "<pre>";
         // var_dump($sql_jawaban);
         // echo "</pre>";
@@ -115,7 +126,7 @@ echo '<div class="card border-primary mb-3">
         if($query->errno){
     			echo '<script>alert("Query error!\n('.$query->errno.') '.$query->error.'");</script>';
     		}else{
-          echo '<script>alert("Selamat Anda telah menyelesaikan test. Jawaban Anda telah tersimpan! ");</script>';
+          echo '<script>alert("Selamat Anda telah menyelesaikan Psikotes. Jawaban Anda telah tersimpan! ");</script>';
     			echo '<script>window.location.href="?page=hasil";</script>';
     		}
       }

@@ -7,7 +7,13 @@
 			<th>Jadwal Test</th>
 			<th>Jawaban Benar</th>
 			<th>Keterangan</th>
-			<th>Aksi</th>
+			<?php
+				if ($user["level"] == "Admin" || $user["level"] == "Staff"){
+					echo '<th>Aksi</th>';
+				}else{
+					echo '';
+				}
+			?>
 		</tr>
 	</thead>
 	<tbody>
@@ -34,13 +40,17 @@
 				}else{
 					echo '<strong class="text-danger">TIDAK LULUS</strong>';
 				}
-				echo '
-				</td>
-				<td class="text-center">
-					<a href="?page='.$page.'&act=detail&id_member='.$data['id_member'].'" class="btn btn-sm btn-primary" title="Detail Member"><span class="fa fa-window-maximize"></span></a>
-					<a href="?page='.$page.'&act=reset&id_member='.$data['id_member'].'" class="btn btn-sm btn-warning" title="Reset Data" onclick="return confirm(\'Reset seluruh hasil tes '.$data['nama'].'?\nSemua hasil tes akan dihapus.\nPeringatan: Data yang sudah dihapus tidak dapat dikembalikan.\')"><span class="fa fa-refresh"></span></a>
-				</td>
-			</tr>';
+				echo '</td>';
+				if ($user["level"] == "Admin" || $user["level"] == "Staff"){
+					echo '<td class="text-center">
+						<a href="?page='.$page.'&act=detail&id_member='.$data['id_member'].'" class="btn btn-sm btn-primary" title="Detail Member"><span class="fa fa-window-maximize"></span></a>
+						<a href="?page='.$page.'&act=reset&id_member='.$data['id_member'].'" class="btn btn-sm btn-warning" title="Reset Data" onclick="return confirm(\'Reset seluruh hasil tes '.$data['nama'].'?\nSemua hasil tes akan dihapus.\nPeringatan: Data yang sudah dihapus tidak dapat dikembalikan.\')"><span class="fa fa-refresh"></span></a>
+					</td>';
+				}else{
+					echo '';
+				}
+
+			echo'</tr>';
 			$no++;
 		}
 	?>

@@ -1,24 +1,24 @@
-<?php 
+<?php
 $cekmember = $db->query("select * from jawaban where id_member = '{$_SESSION['id_member']}'")->num_rows;
 if($cekmember > 0){
-$query = $db->query("select * from hasil_kesemaptaan where id_member = '{$_SESSION['id_member']}' limit 1"); 
+$query = $db->query("select * from hasil_kesemaptaan where id_member = '{$_SESSION['id_member']}' limit 1");
 $kesemaptaan = $query->fetch_assoc();
 $cekkesemaptaan = $query->num_rows;
 	if($cekkesemaptaan > 0){
 		if($kesemaptaan['ket']=='Lulus'){
 			echo '<div class="alert alert-success">Anda <strong>Lulus</strong> Tes Kesemaptaan</div>';
 		}else{
-			echo '<div class="alert alert-danger">Anda <strong>Tidak Lulus</strong> Tes Kesemaptaan</div>';			
+			echo '<div class="alert alert-danger">Anda <strong>Tidak Lulus</strong> Tes Kesemaptaan</div>';
 		}
 ?>
 
 	<form method="post" action="">
-		<?php 
-			echo '<input type="hidden" name="id_member" value="'.$_GET['id_member'].'" />'; 
+		<?php
+			echo '<input type="hidden" name="id_member" value="'.$_GET['id_member'].'" />';
 			$member = $db->query("select nama from member where id_member = '{$_SESSION['id_member']}' limit 1")->fetch_assoc();
 			$cek = $db->query("select * from tes_kesemaptaan")->fetch_assoc();
 		?>
-		
+
 		<div class="form-group row">
 			<label class="col-md-2 col-form-label">ID Member</label>
 			<div class="col-md-3">
@@ -42,7 +42,7 @@ $cekkesemaptaan = $query->num_rows;
 				<?php if($kesemaptaan['tinggi'] < $cek['tinggi']){ echo '<div class="form-text text-danger">Tidak Lulus</div>'; }else{ echo '<div class="form-text text-success">Lulus</div>'; } ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group row">
 			<label class="col-md-2 col-form-label">Berat</label>
 			<div class="col-md-3">
@@ -53,7 +53,7 @@ $cekkesemaptaan = $query->num_rows;
 				<?php if($kesemaptaan['berat'] < $cek['berat']){ echo '<div class="form-text text-danger">Tidak Lulus</div>'; }else{ echo '<div class="form-text text-success">Lulus</div>'; } ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group row">
 			<label class="col-md-2 col-form-label">Bertato</label>
 			<div class="col-md-3">
@@ -61,7 +61,7 @@ $cekkesemaptaan = $query->num_rows;
 				<?php if($kesemaptaan['bertato'] != $cek['bertato']){ echo '<div class="form-text text-danger">Tidak Lulus</div>'; }else{ echo '<div class="form-text text-success">Lulus</div>'; } ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group row">
 			<label class="col-md-2 col-form-label">Bertindik</label>
 			<div class="col-md-3">
@@ -69,7 +69,7 @@ $cekkesemaptaan = $query->num_rows;
 				<?php if($kesemaptaan['bertindik'] != $cek['bertindik']){ echo '<div class="form-text text-danger">Tidak Lulus</div>'; }else{ echo '<div class="form-text text-success">Lulus</div>'; } ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group row">
 			<label class="col-md-2 col-form-label">Cacat Tubuh</label>
 			<div class="col-md-3">
@@ -77,7 +77,7 @@ $cekkesemaptaan = $query->num_rows;
 				<?php if($kesemaptaan['cacat_tubuh'] != $cek['cacat_tubuh']){ echo '<div class="form-text text-danger">Tidak Lulus</div>'; }else{ echo '<div class="form-text text-success">Lulus</div>'; } ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group row">
 			<label class="col-md-2 col-form-label">Patah Tulang</label>
 			<div class="col-md-3">
@@ -85,7 +85,7 @@ $cekkesemaptaan = $query->num_rows;
 				<?php if($kesemaptaan['patah_tulang'] != $cek['patah_tulang']){ echo '<div class="form-text text-danger">Tidak Lulus</div>'; }else{ echo '<div class="form-text text-success">Lulus</div>'; } ?>
 			</div>
 		</div>
-		
+
 		<div class="form-group row">
 			<label class="col-md-2 col-form-label">Penyakit Kulit</label>
 			<div class="col-md-3">
@@ -93,13 +93,13 @@ $cekkesemaptaan = $query->num_rows;
 				<?php if($kesemaptaan['penyakit_kulit'] != $cek['penyakit_kulit']){ echo '<div class="form-text text-danger">Tidak Lulus</div>'; }else{ echo '<div class="form-text text-success">Lulus</div>'; } ?>
 			</div>
 		</div>
-		
+
 	</form>
 <?php
 	}else{
 		echo '<div class="alert alert-info">Anda belum mengikuti Tes Kesemaptaan</div>';
 	}
 }else{
-	echo '<div class="alert alert-info">Silahkan mengerjakan soal psikotes terlebih dahulu</div>';
+	echo '<div class="alert alert-info">Silahkan mengerjakan soal Psikotes terlebih dahulu</div>';
 }
 ?>

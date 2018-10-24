@@ -1,3 +1,7 @@
+<div class="alert alert-primary" role="alert">
+  <h3>Panduan Penilaian Tes Ketahanan Fisik</h3><hr>
+  <p>Keterangan berikut merupakan acuan penilaian Tes Ketahanan Fisik. Klik tombol Simpan untuk merubah nilai acuan !</p>
+</div>
 <?php $fisik = $db->query("select * from tes_fisik order by id_tes desc limit 1")->fetch_assoc(); ?>
 <form method="post" action="">
   <?php echo '<input type="hidden" name="id_tes" value="'.$fisik['id_tes'].'" />'; ?>
@@ -10,7 +14,7 @@
 			</div>
 		</div>
   </div>
-	
+
 	<div class="form-group row">
     <label class="col-md-2 col-form-label">Push Up</label>
 		<div class="col-md-3">
@@ -20,7 +24,7 @@
 			</div>
 		</div>
   </div>
-	
+
 	<div class="form-group row">
     <label class="col-md-2 col-form-label">Sit Up</label>
 		<div class="col-md-3">
@@ -30,7 +34,7 @@
 			</div>
 		</div>
   </div>
-	
+
   <button type="submit" class="btn btn-primary" name="simpan" onclick="return confirm('Simpan perubahan?')">Simpan</button>
 </form>
 
@@ -49,7 +53,7 @@ if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
 			$sql = "insert into tes_fisik(lari, sit_up, push_up)
             values('{$lari}','{$sit_up}','{$push_up}')";
 		}
-		
+
     $query = $db->query($sql);
     if($query->errno){
 			echo '<script>alert("Query error!\n('.$query->errno.') '.$query->error.'");</script>';

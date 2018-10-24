@@ -120,9 +120,12 @@
     </div>
   </div>
 
-  <button class="btn btn-primary" name="simpan" onclick="confirm('Simpan perubahan biodata?')">Simpan</button>
+  <button class="btn btn-primary" name="simpan" onsubmit="confirm('Simpan perubahan biodata?')">Simpan</button>
 </form>
 <?php
+  // echo "<pre>";
+  // var_dump($_POST);
+  // echo "<pre>";
   if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
     $id_member = $_POST['id_member'];
     $nama_member = trim($_POST['nama']);

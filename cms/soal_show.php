@@ -4,7 +4,7 @@
 	<thead class="table-inverse">
 		<tr>
 			<th>No.</th>
-			<th>Pertanyaan</th>
+			<th style="width: 45%" >Pertanyaan</th>
 			<th>Jawaban</th>
 			<th>Kategori Soal</th>
 			<th>publish</th>

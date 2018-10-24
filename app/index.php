@@ -22,9 +22,9 @@ $tgl_now = tanggal_indo($today);
 
     <title>Computer Based Test</title>
 
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../vendor/datatable/datatables.min.css" rel="stylesheet">
-    <link href="../vendor/datatable/DataTables-1.10.15/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+		<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/DataTables/datatables.min.css" rel="stylesheet">
+    <!-- <link href="../vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -65,10 +65,11 @@ $tgl_now = tanggal_indo($today);
       </div>
     </div>
 
-	<script src="../vendor/jquery/jquery.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="../vendor/datatable/datatables.min.js"></script>
-	<script src="../vendor/datatable/DataTables-1.10.15/js/dataTables.bootstrap4.min.js"></script>
+		<script src="../vendor/jquery/jquery.js"></script>
+		<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../vendor/DataTables/datatables.min.js"></script>
+		<script src="../vendor/DataTables/TableTools.ShowSelectedOnly.js"></script>
+		<script src="../vendor/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			$('#datatable').DataTable();

@@ -14,17 +14,23 @@
 		$cek = $db->query("select * from tes_kesemaptaan order by id_tes desc limit 1")->fetch_assoc();
 		$no = 1;
 		$sql = "select m.*, hk.ket from member m
-						left join hasil_kesemaptaan hk 
-						on m.id_member = hk.id_member 
-						where m.id_member in (select id_member from jawaban) order by nama";
+						left join hasil_kesemaptaan hk
+						on m.id_member = hk.id_member
+						where m.id_member in (select distinct(id_member) from jawaban) order by nama";
 		$query = $db->query($sql);
 		while($data = $query->fetch_assoc()){
 			echo '<tr>
 				<td class="text-center">'.$no.'.</td>
 				<td>'.$data['nama'].'</td>
-				<td';
-				if($data['ket']=='Lulus'){ echo ' class="text-success"'; }else{ echo ' class="text-danger"'; }
-				echo '><strong>'.$data['ket'].'</strong></td>
+				<td>';
+				if (empty($data['ket'])) {
+					echo '<p class="bg-warning text-center"><strong>Belum dinilai</strong></p>';
+				}else {
+					$retVal = ($data['ket']=='Lulus') ? '<p class="bg-success text-center"><strong>'.$data['ket'].'</strong></p>' : '<p class="bg-danger text-center"><strong>'.$data['ket'].'</strong></p>' ;
+					echo $retVal;
+				}
+
+				echo '</td>
 				<td class="text-center">
 					<a href="?page='.$page.'&act=edit&id_member='.$data['id_member'].'" class="btn btn-sm btn-success" title="Edit Member"><span class="fa fa-edit"></span></a>
 					<a href="?page='.$page.'&act=detail&id_member='.$data['id_member'].'" class="btn btn-sm btn-primary" title="Detail Member"><span class="fa fa-window-maximize"></span></a>
