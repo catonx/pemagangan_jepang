@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/user/bengkelk/project.bengkelkanopi.com/
+    - export DEPLOYPATH=/home/bengkelk/project.bengkelkanopi.com/
     - /bin/cp -a * $DEPLOYPATH
