@@ -7,9 +7,9 @@ date_default_timezone_set('Asia/Jakarta');
 
 // Define Database
 define('DBHOST', 'localhost');
-define('DBUSER', 'root');
-define('DBPASS', '');
-define('DBNAME', 'project_magang');
+define('DBUSER', 'bengkelk');
+define('DBPASS', '.4h[Ma70Wl9WBj');
+define('DBNAME', 'bengkelk_project_magang');
 
 $db = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
 if($db->connect_errno){
