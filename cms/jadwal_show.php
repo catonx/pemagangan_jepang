@@ -6,7 +6,7 @@
 			<th>No.</th>
 			<th>Tgl. Pelaksanaan</th>
 			<th>Provinsi</th>
-			<th>publish</th>
+			<th>Publish</th>
 			<th>Aksi</th>
 		</tr>
 	</thead>
@@ -16,9 +16,10 @@
 		$sql = "select * from jadwal";
 		$query = $db->query($sql);
 		while($data = $query->fetch_assoc()){
+			$tgl = tanggal_indo($data['jadwal']);
 			echo '<tr>
 				<td class="text-center">'.$no.'.</td>
-				<td>'.$data['tgl'].' '.$data['bln'].' '.$data['thn'].'</td>
+				<td>'.$tgl.'</td>
 				<td>'.$data['provinsi'].'</td>
 				<td>'.$data['publish'].'</td>
 				<td class="text-center">

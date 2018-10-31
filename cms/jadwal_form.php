@@ -1,6 +1,10 @@
 <?php if($act=='edit'){ $jadwal = $db->query("select * from jadwal where id_jadwal='{$_GET['id_jadwal']}' limit 1")->fetch_assoc(); } ?>
 <form method="post" action="">
-  <?php echo '<input type="hidden" name="id_jadwal" value="'.$jadwal['id_jadwal'].'" />'; ?>
+  <?php
+    echo '<input type="hidden" name="id_jadwal" value="'.$jadwal['id_jadwal'].'" />';
+    $date = date_create($jadwal['jadwal']);
+    var_dump(date_format($date, 'Y'));
+  ?>
   <div class="form-group row">
     <label class="col-md-2 col-form-label">Tanggal</label>
     <div class="col-md-1">
@@ -9,7 +13,7 @@
 				<?php
 					for($tg = 1; $tg <= 31; $tg++){
 						echo '<option value="'.$tg.'"';
-						if($tg == $jadwal['tgl']){ echo ' selected'; }
+						if($tg == date_format($date, 'd')){ echo ' selected'; }
 						echo '>'.$tg.'</option>';
 					}
 				?>
@@ -23,10 +27,11 @@
 				<option value=""></option>
 				<?php
 					$blAr = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
-					foreach($blAr as $bl){
+					foreach($blAr as $bl=>$val){
+            $bl = $bl + 1;
 						echo '<option value="'.$bl.'"';
-						if($bl == $jadwal['bln']){ echo ' selected'; }
-						echo '>'.$bl.'</option>';
+						if($bl == date_format($date, 'm')){ echo ' selected'; }
+						echo '>'.$val.'</option>';
 					}
 				?>
 			</select>
@@ -38,9 +43,11 @@
        <select type="text" class="form-control" name="thn" required>
 				<option value=""></option>
 				<?php
-					for($th = 2017; $th <= 2030; $th++){
+          $th_now = date("Y");
+          $th_range = $th_now + 10 ;
+					for($th = $th_now; $th <= $th_range; $th++){
 						echo '<option value="'.$th.'"';
-						if($th == $jadwal['thn']){ echo ' selected'; }
+						if($th == date_format($date, 'Y')) { echo ' selected'; }
 						echo '>'.$th.'</option>';
 					}
 				?>

@@ -5,7 +5,15 @@ require_once '../config.php';
 if(empty($_SESSION['id_member']) || !isset($_SESSION['id_member'])){
 	header('location: ../');
 }
-$member = $db->query("select * from member where id_member = '{$_SESSION['id_member']}' limit 1")->fetch_assoc();
+// concat(j.tgl,'-',j.bln,'-',j.thn) as jadwal
+$uye = "select m.*, j.jadwal, j.id_jadwal
+from member m
+left join jadwal_member jm on m.id_member = jm.id_member
+left join jadwal j on jm.id_jadwal = j.id_jadwal
+where m.id_member = '{$_SESSION['id_member']}' limit 1";
+$member = $db->query($uye)->fetch_assoc();
+// $member = $db->query("select * from member where id_member = '{$_SESSION['id_member']}' limit 1")->fetch_assoc();
+// var_dump($member);
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $act = isset($_GET['act']) ? $_GET['act'] : 'show';
 $today = date('Y-n-j');

@@ -1,5 +1,5 @@
 <?php
-var_dump($member);
+
 $getresult = $db->query("select * from jawaban where id_member = '{$member['id_member']}'");
 $resultexist = $getresult->fetch_assoc();
 $gettgl = $db->query("select * from jadwal where id_jadwal = '{$member['id_jadwal']}' ");
@@ -104,13 +104,14 @@ echo '<div class="card border-primary mb-3">
         </div><hr />';
     }
     echo '</div><hr />';
-    echo '<button type="submit" class="btn btn-primary" name="simpan" onclick="return confirm(\'Anda yakin sudah selesai mengerjakan semua soal?\nKlik OK jika anda sudah yakin. Data akan disimpan dan tidak dapat diubah lagi.\')">Simpan</button>';
+    echo '<button type="submit" class="btn btn-primary" name="simpan" onsubmit="return confirm(\'Anda yakin sudah selesai mengerjakan semua soal?\nKlik OK jika anda sudah yakin. Data akan disimpan dan tidak dapat diubah lagi.\')">Simpan</button>';
     echo '</form></div>';
 
     if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
-      // echo "<pre>";
-      // var_dump($_POST);
-      // echo "</pre>";
+      echo "<pre>";
+      var_dump($_POST);
+      echo "</pre>";
+      exit;
       for ($i=1; $i<=20; $i++) {
         $id_soal = $_POST['id_soal_'.$i];
         $id_kategori = $_POST['id_kategori_'.$i];
