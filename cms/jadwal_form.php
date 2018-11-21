@@ -3,7 +3,7 @@
   <?php
     echo '<input type="hidden" name="id_jadwal" value="'.$jadwal['id_jadwal'].'" />';
     $date = date_create($jadwal['jadwal']);
-    var_dump(date_format($date, 'Y'));
+    // var_dump(date_format($date, 'Y'));
   ?>
   <div class="form-group row">
     <label class="col-md-2 col-form-label">Tanggal</label>

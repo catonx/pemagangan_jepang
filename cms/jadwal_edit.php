@@ -1,8 +1,6 @@
 <?php
 include 'jadwal_form.php';
 if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
-  // var_dump($_POST);
-  // exit;
   $id_jadwal=$_POST['id_jadwal'];
   $tgl=trim($_POST['tgl']);
   $bln=trim($_POST['bln']);

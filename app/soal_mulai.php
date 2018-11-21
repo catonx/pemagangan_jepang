@@ -1,17 +1,43 @@
 <?php
-
-$getresult = $db->query("select * from jawaban where id_member = '{$member['id_member']}'");
-$resultexist = $getresult->fetch_assoc();
-$gettgl = $db->query("select * from jadwal where id_jadwal = '{$member['id_jadwal']}' ");
-$tgljadwal = $gettgl->fetch_assoc();
-$tglmember = $tgljadwal['tgl'].' '.$tgljadwal['bln'].' '.$tgljadwal['thn'];
-if (!empty($resultexist)) {
+$sql_check = "
+SELECT m.id_member, jm.id_jadwal, jd.jadwal, j.created_at, count(j.id_jawaban) AS answer, x.correct
+FROM member m
+LEFT JOIN jadwal_member jm ON jm.id_member = m.id_member
+LEFT JOIN jadwal jd ON jm.id_jadwal = jd.id_jadwal
+LEFT JOIN jawaban j ON j.id_jadwal = jd.id_jadwal
+LEFT JOIN ( SELECT jw.id_member, jw.id_jadwal, count(jw.id_jawaban) AS correct FROM jawaban jw, soal s WHERE jw.id_soal = s.id_soal AND jw.jawaban = s.jawaban GROUP BY jw.id_member, jw.id_jadwal) AS x ON x.id_jadwal = jm.id_jadwal
+WHERE m.id_member = ".$member['id_member']."
+GROUP BY m.id_member, jm.id_jadwal, j.created_at, x.correct ";
+// $getresult = $db->query("select * from jawaban where id_member = '{$member['id_member']}'");
+// echo '<pre>';
+// var_dump($getresult->num_rows);
+// echo '</pre>';
+if(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $member['jadwal'] != date('Y-n-d')){
   echo '<div class="alert alert-info">
-  <p>Anda telah melakukan test.</p>
-  <a href="?page=hasil" class="btn btn-primary" ><i class="fa fa fa-check-square-o"></i> Lihat hasil tes </a>
+  <p><i class="fa fa-fw fa-caret-right"></i>Silahkan lengkapi biodata dan tentukan jadwal tes terlebih dulu.</p>
+	<p><i class="fa fa-fw fa-caret-right"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
   </div>';
+}else{
+  $getresult = $db->query($sql_check);
+  while ($resultexist = $getresult->fetch_assoc()) {
+    if ($getresult->num_rows == 1 && $resultexist['correct'] >= 14) {
+      echo
+      '<div class="alert alert-info">
+      <p>Anda telah melakukan test.</p>
+      <a href="?page=hasil" class="btn btn-primary" ><i class="fa fa fa-check-square-o"></i> Lihat hasil tes </a>
+      </div>';
+    }elseif ($getresult->num_rows == 1 && $resultexist['correct'] < 14) {
+      echo '<div class="alert alert-danger">
+        <i class="fa fa-fw fa-warning"></i>Anda belum lulus psikotes periode 1 ! </br> Silahkan kerjakan kembali tes dengan menekan tombol "Mulai" di bawah ini.
+      </div>';
+    }
+  }
 }
-elseif(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $tglmember != $tgl_now){
+// $resultexist = $getresult->fetch_assoc();
+if ($finish_test) {
+  echo $result_content;
+}
+elseif(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $member['jadwal'] != date('Y-n-d')){
   echo '<div class="alert alert-info">
   <p><i class="fa fa-fw fa-caret-right"></i>Silahkan lengkapi biodata dan tentukan jadwal tes terlebih dulu.</p>
 	<p><i class="fa fa-fw fa-caret-right"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
@@ -108,21 +134,15 @@ echo '<div class="card border-primary mb-3">
     echo '</form></div>';
 
     if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
-      echo "<pre>";
-      var_dump($_POST);
-      echo "</pre>";
-      exit;
       for ($i=1; $i<=20; $i++) {
         $id_soal = $_POST['id_soal_'.$i];
         $id_kategori = $_POST['id_kategori_'.$i];
         $id_member = $_POST['id_member_'.$i];
         $id_jadwal = $_POST['id_jadwal_'.$i];
         $jawaban = $_POST['jawaban_'.$i];
-        $sql_jawaban = "insert into jawaban(id_soal, id_kategori, id_member, jawaban, id_jadwal)
-        values('{$id_soal}','{$id_kategori}','{$id_member}','{$jawaban}','{$id_jadwal}')";
-        // echo "<pre>";
-        // var_dump($sql_jawaban);
-        // echo "</pre>";
+        $submit_jawaban = date('Y-m-d H:i:s');
+        $sql_jawaban = "insert into jawaban(id_soal, id_kategori, id_member, jawaban, id_jadwal, created_at)
+        values('{$id_soal}','{$id_kategori}','{$id_member}','{$jawaban}','{$id_jadwal}', '{$submit_jawaban}')";
         $query = $db->query($sql_jawaban);
         if($query->errno){
     			echo '<script>alert("Query error!\n('.$query->errno.') '.$query->error.'");</script>';
