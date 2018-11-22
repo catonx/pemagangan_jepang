@@ -19,20 +19,20 @@
 	<tbody>
 	<?php
 		$no = 1;
-		$sql = "SELECT m.id_member, m.nama , m.provinsi, CONCAT(j.tgl,' ', j.bln,' ', j.thn) AS jadwal, count(x.jawaban) AS jawaban
-    FROM member m
-    LEFT JOIN
-    (SELECT j.jawaban, j.id_member FROM jawaban j LEFT JOIN soal s ON s.id_soal = j.id_soal WHERE s.jawaban = j.jawaban) AS x ON x.id_member = m.id_member
-    LEFT JOIN jadwal j ON j.id_jadwal = m.id_jadwal
-    WHERE m.id_member IN (SELECT id_member FROM jawaban)
-    GROUP BY m.id_member";
+		$sql = "SELECT j.id_member, m.nama , m.provinsi, j.id_jadwal , jw.jadwal, count(j.jawaban) AS jawaban
+FROM jawaban j
+LEFT JOIN soal s ON s.id_soal = j.id_soal
+LEFT JOIN jadwal jw ON jw.id_jadwal = j.id_jadwal
+LEFT JOIN member m ON j.id_member = m.id_member
+WHERE s.jawaban = j.jawaban
+GROUP BY j.id_jadwal, j.id_member";
 		$query = $db->query($sql);
 		while($data = $query->fetch_assoc()){
 			echo '<tr>
 				<td class="text-center">'.$no.'.</td>
 				<td>'.$data['nama'].'</td>
 				<td>'.$data['provinsi'].'</td>
-				<td>'.$data['jadwal'].'</td>
+				<td>'.tanggal_indo($data['jadwal']).'</td>
 				<td>'.$data['jawaban'].'</td>
 				<td>';
 				if($data['jawaban'] >= 14){
