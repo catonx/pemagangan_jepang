@@ -12,61 +12,80 @@ GROUP BY m.id_member, jm.id_jadwal, j.created_at, x.correct ";
 // echo '<pre>';
 // var_dump($getresult->num_rows);
 // echo '</pre>';
-if(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $member['jadwal'] != date('Y-n-d')){
+
+$getresult = $db->query($sql_check);
+$result_content = '';
+$start_soal = TRUE;
+if(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) ||
+empty($member['id_jadwal'])){
+  $start_soal = FALSE;
   echo '<div class="alert alert-info">
   <p><i class="fa fa-fw fa-caret-right"></i>Silahkan lengkapi biodata dan tentukan jadwal tes terlebih dulu.</p>
 	<p><i class="fa fa-fw fa-caret-right"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
   </div>';
 }else{
-  $getresult = $db->query($sql_check);
   while ($resultexist = $getresult->fetch_assoc()) {
-    if ($getresult->num_rows == 1 && $resultexist['correct'] >= 14) {
-      echo
-      '<div class="alert alert-info">
+    // if ($getresult->num_rows == 1 && $resultexist['correct'] >= 14) {
+    if ($resultexist['correct'] >= 14) {
+      $start_soal = FALSE;
+      $result_content = '<div class="alert alert-info">
       <p>Anda telah melakukan test.</p>
       <a href="?page=hasil" class="btn btn-primary" ><i class="fa fa fa-check-square-o"></i> Lihat hasil tes </a>
       </div>';
-    }elseif ($getresult->num_rows == 1 && $resultexist['correct'] < 14) {
-      echo '<div class="alert alert-danger">
-        <i class="fa fa-fw fa-warning"></i>Anda belum lulus psikotes periode 1 ! </br> Silahkan kerjakan kembali tes dengan menekan tombol "Mulai" di bawah ini.
-      </div>';
+    }else{
+      if ($getresult->num_rows == 1 && $resultexist['correct'] < 14) {
+        $start_soal = FALSE;
+        $result_content = '<div class="alert alert-danger">
+        <p><i class="fa fa-fw fa-warning"></i>Anda belum lulus psikotes periode 1 ! </p>
+        <p><i class="fa fa-fw fa-warning"></i>Silahkan tentukan kembali jadwal tes terlebih dulu.</p>
+        <p><i class="fa fa-fw fa-warning"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
+        <a href="?page=jadwal" class="btn btn-primary" ><i class="fa fa fa-check-square-o"></i> Tentukan Jadwal tes </a>
+        </div>';
+      }else {
+        $start_soal = TRUE;
+        $result_content = '<div class="alert alert-danger">
+          <i class="fa fa-fw fa-warning"></i>Anda belum lulus psikotes periode 1 ! </br> Silahkan kerjakan kembali tes dengan menekan tombol "Mulai tes" di bawah ini.
+        </div>';
+      }
     }
   }
 }
 // $resultexist = $getresult->fetch_assoc();
-if ($finish_test) {
+// if ($finish_test) {
+//   echo $result_content;
+// }
+// elseif(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $member['jadwal'] != date('Y-n-d')){
+//   echo '<div class="alert alert-info">
+//   <p><i class="fa fa-fw fa-caret-right"></i>Silahkann lengkapi biodata dan tentukan jadwal tes terlebih dulu.</p>
+// 	<p><i class="fa fa-fw fa-caret-right"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
+//   </div>';
+// }else{
+// var_dump($start_soal);
+if($_GET['page'] == 'soal' && empty($_GET['act'])){
   echo $result_content;
-}
-elseif(empty($member['provinsi']) || empty($member['th_pelaksanaan']) || empty($member['kelamin']) || empty($member['agama']) || empty($member['tempat_lahir']) || empty($member['tgl_lahir']) || empty($member['alamat']) || empty($member['id_jadwal']) || $member['jadwal'] != date('Y-n-d')){
-  echo '<div class="alert alert-info">
-  <p><i class="fa fa-fw fa-caret-right"></i>Silahkan lengkapi biodata dan tentukan jadwal tes terlebih dulu.</p>
-	<p><i class="fa fa-fw fa-caret-right"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
-  </div>';
-}else{
-echo '<div class="card border-primary mb-3">
-        <div class="card-header bg-primary text-light">';
-          if($_GET['page'] == 'soal' && empty($_GET['act'])){
-            echo'<div class="float-left"><h5><i class="fa fa-tag fa-fw"></i>Panduan Pengerjaan</h5></div>';
-          }
-          elseif (($_GET['page'] == 'soal') && ($_GET['act'] == 'start')) {
-            echo'<div class="float-left"><h5><i class="fa fa-tag fa-fw"></i>Pilihlah jawaban yang sesuai!</h5></div>';
-            echo'<div class="float-right"><h5>Sisa Waktu: <span id="timer" class="text-warning"></span></h5></div>';
-          }
-          else {
-            echo'<div class="float-left"><h5><i class="fa fa-tag fa-fw"></i>Halaman tidak ditemukan!</h5></div>';
-          }
-        echo '</div>';
-  if($_GET['page'] == 'soal' && empty($_GET['act'])){
-    echo '<div class="card-body">
+  if ($start_soal) {
+  echo '<div class="card border-primary mb-3">
+          <div class="card-header bg-primary text-light">
+            <div class="float-left"><h5><i class="fa fa-tag fa-fw"></i>Panduan Pengerjaan</h5></div>
+          </div>';
+  echo '  <div class="card-body">
             <p>Anda akan mengerjakan 20 soal dalam 15 Menit</p>
             <p>Kerjakan soal-soal mulai dari yang termudah dahulu</p>
             <p>Anda dapat melewati soal yang sulit dan di kerjakan kemudian selama waktu belum habis</p>
           </div>
           <div class="card-footer">
             <a href="?page=soal&act=start" class="btn btn-success">Mulai Tes</a>
-          </div>';
-  }elseif ($_GET['page'] == 'soal' && $_GET['act'] == 'start') {
-    //untuk memulai session
+          </div>
+        </div>';
+  }
+}else{
+  if ($_GET['page'] == 'soal' && $_GET['act'] == 'start') {
+    echo '<div class="card border-primary mb-3">
+            <div class="card-header bg-primary text-light">
+              <div class="float-left"><h5><i class="fa fa-tag fa-fw"></i>Pilihlah jawaban yang sesuai!</h5></div>
+              <div class="float-right"><h5>Sisa Waktu: <span id="timer" class="text-warning"></span></h5></div>';
+    echo '  </div>';
+  //untuk memulai session
     session_start();
      //set session dulu dengan nama $_SESSION["mulai"]
     if (isset($_SESSION["mulai"])) {
@@ -95,7 +114,7 @@ echo '<div class="card border-primary mb-3">
         $detik  = $temp_detik;
     }
     $form_data = [];
-    echo '<div class="card-body"><form id="form_soal" method="post" action="">';
+    echo '<form id="form_soal" method="post" action=""><div class="card-body">';
     $no = 1;
     $sql = "SELECT * FROM soal s WHERE s.publish = 'Ya' ORDER BY RAND() LIMIT 20";
     $sql_temp = $db->query($sql);
@@ -129,9 +148,8 @@ echo '<div class="card border-primary mb-3">
           </label>
         </div><hr />';
     }
-    echo '</div><hr />';
-    echo '<button type="submit" class="btn btn-primary" name="simpan" onsubmit="return confirm(\'Anda yakin sudah selesai mengerjakan semua soal?\nKlik OK jika anda sudah yakin. Data akan disimpan dan tidak dapat diubah lagi.\')">Simpan</button>';
-    echo '</form></div>';
+    echo '<div class="card-footer"><button type="submit" class="btn btn-primary" name="simpan" onsubmit="return confirm(\'Anda yakin sudah selesai mengerjakan semua soal?\nKlik OK jika anda sudah yakin. Data akan disimpan dan tidak dapat diubah lagi.\')">Simpan</button>';
+    echo '</div></div></form>';
 
     if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
       for ($i=1; $i<=20; $i++) {
@@ -153,11 +171,6 @@ echo '<div class="card border-primary mb-3">
       }
     }
   }
-  else {
-    echo '<div class="card-body">
-            <p>salah halaman</p>
-          </div>';
-  }
-  echo '</div>';
 }
+
 ?>
