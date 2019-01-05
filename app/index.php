@@ -16,8 +16,12 @@ $member = $db->query($uye)->fetch_assoc();
 // var_dump($member);
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $act = isset($_GET['act']) ? $_GET['act'] : 'show';
-$today = date('Y-n-j');
+$today = date('Y-n-d');
 $tgl_now = tanggal_indo($today);
+// echo "<pre>";
+// var_dump($member);
+// echo "</pre>";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,13 +65,13 @@ $tgl_now = tanggal_indo($today);
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
         <?php
-			if(in_array($menuAr[$page],$menuAr)){
-				echo '<h1>'.$menuAr[$page].'</h1>';
-				include $page.'.php';
-			}else{
-				include 'home.php';
-			}
-		?>
+				if(in_array($menuAr[$page],$menuAr)){
+					echo '<h1>'.$menuAr[$page].'</h1>';
+					include $page.'.php';
+				}else{
+					include 'home.php';
+				}
+				?>
 
         </main>
       </div>

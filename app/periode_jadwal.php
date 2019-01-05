@@ -83,7 +83,7 @@
                 <label class="col-md-2 col-form-label">Tanggal tes</label>
                 <div class="col-md-10">';
                 if (empty($jadwal_and_test['created_at'])) {
-                  echo "-";
+                  echo "<a href='?page=soal' class='btn btn-success'>Mulai Tes</a>";
                 }else{
                   echo'<input type="text" class="form-control" value="'.$jadwal_and_test['created_at'].'" readonly>';
                 }
@@ -135,7 +135,8 @@
                   <label class="col-md-2 col-form-label">Tanggal tes</label>
                   <div class="col-md-10">';
                   if (empty($jadwal_and_test['created_at'])) {
-                    echo "-";
+                    // echo "-";
+                    echo "<a href='?page=soal' class='btn btn-success'>Mulai Tes</a>";
                   }else{
                     echo'<input type="text" class="form-control" value="'.$jadwal_and_test['created_at'].'" readonly>';
                   }

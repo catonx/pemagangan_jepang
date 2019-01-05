@@ -13,6 +13,8 @@ if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
 	$id_tentang = $_POST['id_tentang'];
 	$isi = trim($_POST['isi']);
 
+  // var_dump($_POST);
+
 	if(!empty($isi)){
 		$hit=$db->query("select * from tentang")->num_rows;
 		if($hit>0){
@@ -20,6 +22,7 @@ if(isset($_POST['simpan']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
 		}else{
 			$query="insert into tentang(isi) values('{$isi}')";
 		}
+    // var_dump($query);
 		$in=$db->query($query);
 		if($in){
 			echo '<script>alert("Data berhasil disimpan");</script>';

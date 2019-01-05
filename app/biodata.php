@@ -72,7 +72,7 @@
 
         <div class="form-row">
           <div class="form-group col-md-8">
-            <label>Provinsi</label>
+            <label>Pilih Provinsi Tes</label>
               <?php
                 if(!empty($member['provinsi'])){
                   echo '<input type="text" class="form-control" name="provinsi" value="'.$member['provinsi'].'" readonly>';
@@ -92,7 +92,7 @@
             <?php } ?>
           </div>
           <div class="form-group col-md-4">
-            <label>Tahun Pelaksanaan</label>
+            <label>Pilih Tahun Pelaksanaan Tes</label>
               <?php
                 if(!empty($member['th_pelaksanaan'])){
                   echo '<input type="text" class="form-control" name="th_pelaksanaan" value="'.$member['th_pelaksanaan'].'" readonly>';

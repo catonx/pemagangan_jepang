@@ -25,27 +25,34 @@ empty($member['id_jadwal'])){
   </div>';
 }else{
   while ($resultexist = $getresult->fetch_assoc()) {
-    // if ($getresult->num_rows == 1 && $resultexist['correct'] >= 14) {
+    // echo "<pre>";
+    // var_dump($resultexist['jadwal']);
+    // echo "</pre>";
+    // exit;
+    $pilihan_tanggal = tanggal_indo($resultexist['jadwal']);
     if ($resultexist['correct'] >= 14) {
-      $start_soal = FALSE;
+      $start_soal = TRUE;
       $result_content = '<div class="alert alert-info">
       <p>Anda telah melakukan test.</p>
       <a href="?page=hasil" class="btn btn-primary" ><i class="fa fa fa-check-square-o"></i> Lihat hasil tes </a>
       </div>';
     }else{
-      if ($getresult->num_rows == 1 && $resultexist['correct'] < 14) {
-        $start_soal = FALSE;
+      if ($getresult->num_rows == 1 && $resultexist['correct'] < 14 && !empty($resultexist['created_at'])) {
+        // $start_soal = (tanggal_indo($resultexist['jadwal']) == $tgl_now) ?  : b ;$start_soal = FALSE;
+        $start_soal = TRUE;
         $result_content = '<div class="alert alert-danger">
         <p><i class="fa fa-fw fa-warning"></i>Anda belum lulus psikotes periode 1 ! </p>
         <p><i class="fa fa-fw fa-warning"></i>Silahkan tentukan kembali jadwal tes terlebih dulu.</p>
         <p><i class="fa fa-fw fa-warning"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
         <a href="?page=jadwal" class="btn btn-primary" ><i class="fa fa fa-check-square-o"></i> Tentukan Jadwal tes </a>
         </div>';
-      }else {
+      }
+      else {
         $start_soal = TRUE;
         $result_content = '<div class="alert alert-danger">
           <i class="fa fa-fw fa-warning"></i>Anda belum lulus psikotes periode 1 ! </br> Silahkan kerjakan kembali tes dengan menekan tombol "Mulai tes" di bawah ini.
         </div>';
+
       }
     }
   }
@@ -60,15 +67,24 @@ empty($member['id_jadwal'])){
 // 	<p><i class="fa fa-fw fa-caret-right"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
 //   </div>';
 // }else{
-// var_dump($start_soal);
+// var_dump($pilihan_tanggal);
+// var_dump($tgl_now);
+// $start_soal = ($pilihan_tanggal == $tgl_now)? TRUE  : FALSE ;
 if($_GET['page'] == 'soal' && empty($_GET['act'])){
-  echo $result_content;
-  if ($start_soal) {
-  echo '<div class="card border-primary mb-3">
+
+  if ($pilihan_tanggal != $tgl_now) {
+
+    echo'<div class="alert alert-danger">
+    <p><i class="fa fa-fw fa-warning"></i>Anda tidak pada periode pengerjaan tes </p>
+    <p><i class="fa fa-fw fa-warning"></i>Soal tes akan tampil sesuai dengan jadwal tes yang anda tentukan.</p>
+      </div>';
+  }else{
+    echo $result_content;
+    echo '<div class="card border-primary mb-3">
           <div class="card-header bg-primary text-light">
             <div class="float-left"><h5><i class="fa fa-tag fa-fw"></i>Panduan Pengerjaan</h5></div>
-          </div>';
-  echo '  <div class="card-body">
+          </div>
+          <div class="card-body">
             <p>Anda akan mengerjakan 20 soal dalam 15 Menit</p>
             <p>Kerjakan soal-soal mulai dari yang termudah dahulu</p>
             <p>Anda dapat melewati soal yang sulit dan di kerjakan kemudian selama waktu belum habis</p>
