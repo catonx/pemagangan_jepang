@@ -10,7 +10,8 @@ $uye = "select m.*, j.jadwal, j.id_jadwal
 from member m
 left join jadwal_member jm on m.id_member = jm.id_member
 left join jadwal j on jm.id_jadwal = j.id_jadwal
-where m.id_member = '{$_SESSION['id_member']}'";
+where m.id_member = '{$_SESSION['id_member']}'
+ORDER BY j.id_jadwal DESC";
 $member = $db->query($uye)->fetch_assoc();
 // $member = $db->query("select * from member where id_member = '{$_SESSION['id_member']}' limit 1")->fetch_assoc();
 // var_dump($member);
