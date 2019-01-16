@@ -164,9 +164,9 @@ $tgl_now = tanggal_indo($today);
                         if(jam < 0) {
                             clearInterval(hitung);
                             /** Variable yang digunakan untuk submit secara otomatis di Form */
-                            var frmSoal = document.getElementById("form_soal");
+                            frmSoal = document.getElementById("form_soal");
                             alert('Waktu Anda telah habis.');
-                            form_soal.submit();
+                            frmSoal.submit();
 														window.location.href="clear_session.php";
                         }
                     }

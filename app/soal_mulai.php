@@ -186,7 +186,7 @@ if($_GET['page'] == 'soal' && empty($_GET['act'])){
   // echo "</pre>";
   // exit;
   if ($_GET['page'] == 'soal' && $_GET['act'] == 'start') {
-    if ($start_soal == TRUE) {
+    if ($start_soal == "TRUE") {
       echo '<div class="card border-primary mb-3">
               <div class="card-header bg-primary text-light">
                 <div class="float-left"><h5><i class="fa fa-tag fa-fw"></i>Pilihlah jawaban yang sesuai!</h5></div>
