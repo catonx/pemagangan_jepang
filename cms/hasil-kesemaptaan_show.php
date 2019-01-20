@@ -11,7 +11,7 @@
 	</thead>
 	<tbody>
 	<?php
-		$cek = $db->query("select * from tes_kesemaptaan order by id_tes desc limit 1")->fetch_assoc();
+		$cek = $db->query("SELECT * FROM tes_kesemaptaan ORDER BY id_tes DESC LIMIT 1")->fetch_assoc();
 		$no = 1;
 		$sql = "SELECT m.*, hk.ket FROM member m
 LEFT JOIN hasil_kesemaptaan hk ON m.id_member = hk.id_member
