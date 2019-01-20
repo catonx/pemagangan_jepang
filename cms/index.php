@@ -11,32 +11,41 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'show';
 $title = "";
 
 $menuArs = array(
-						 array('page'=>'Home','menu'=>'home', 'level'=>'All',),
-						 array('page'=>'Tentang','menu'=>'tentang', 'level'=>'Admin',),
-						 array('page'=>'Panduan Member','menu'=>'panduan', 'level'=>'Admin',),
-						 array('page'=>'Member','menu'=>'member', 'level'=>'All',),
-						 array('page'=>'Provinsi','menu'=>'provinsi', 'level'=>'Admin',),
-						 array('page'=>'Jadwal Tes','menu'=>'jadwal', 'level'=>'Admin',),
-						 array('page'=>'Kategori Soal','menu'=>'kategori', 'level'=>'Admin',),
-						 array('page'=>'Soal','menu'=>'soal', 'level'=>'All',),
-						 array('page'=>'Hasil Tes','menu'=>'hasil', 'level'=>'All',),
-						 array('page'=>'Acuan Kesemaptaan','menu'=>'kesemaptaan', 'level'=>'All',),
-						 array('page'=>'Hasil Tes Kesemaptaan','menu'=>'hasil-kesemaptaan', 'level'=>'All',),
-						 array('page'=>'Acuan Ketahanan Fisik','menu'=>'fisik', 'level'=>'All',),
-						 array('page'=>'Hasil Tes Fisik','menu'=>'hasil-fisik', 'level'=>'All',),
-						 array('page'=>'Admin & Staff','menu'=>'user', 'level'=>'Admin',),
-						 array('page'=>'Akun Saya','menu'=>'akun', 'level'=>'All',),
-						 array('page'=>'Ganti Password','menu'=>'ganti-password', 'level'=>'All',),
-						 array('page'=>'Keluar','menu'=>'keluar', 'level'=>'All')
+						 array('no'=>1,'page'=>'Home','menu'=>'home', 'level'=>'All',),
+						 array('no'=>2,'page'=>'Tentang','menu'=>'tentang', 'level'=>'Admin',),
+						 array('no'=>3,'page'=>'Panduan Member','menu'=>'panduan', 'level'=>'Admin',),
+						 array('no'=>4,'page'=>'Member','menu'=>'member', 'level'=>'All',),
+						 array('no'=>5,'page'=>'Provinsi','menu'=>'provinsi', 'level'=>'Admin',),
+						 array('no'=>6,'page'=>'Jadwal Tes','menu'=>'jadwal', 'level'=>'Admin',),
+						 array('no'=>7,'page'=>'Kategori Soal','menu'=>'kategori', 'level'=>'Admin',),
+						 array('no'=>8,'page'=>'Soal','menu'=>'soal', 'level'=>'All',),
+						 array('no'=>9,'page'=>'Hasil Tes','menu'=>'hasil', 'level'=>'All',),
+						 array('no'=>10,'page'=>'Acuan Kesemaptaan','menu'=>'kesemaptaan', 'level'=>'All',),
+						 array('no'=>11,'page'=>'Hasil Tes Kesemaptaan','menu'=>'hasil-kesemaptaan', 'level'=>'All',),
+						 array('no'=>12,'page'=>'Acuan Ketahanan Fisik','menu'=>'fisik', 'level'=>'All',),
+						 array('no'=>13,'page'=>'Hasil Tes Fisik','menu'=>'hasil-fisik', 'level'=>'All',),
+						 array('no'=>14,'page'=>'Admin & Staff','menu'=>'user', 'level'=>'Admin',),
+						 array('no'=>15,'page'=>'Akun Saya','menu'=>'akun', 'level'=>'All',),
+						 array('no'=>16,'page'=>'Ganti Password','menu'=>'ganti-password', 'level'=>'All',),
+						 array('no'=>17,'page'=>'Keluar','menu'=>'keluar', 'level'=>'All')
 					);
 
 $menu_lists = filter_array($menuArs,'All');
+// $menu_lists_ordered = asort($menu_lists);
+$menu_lists_ordered = [];
+
 if ($user["level"] == "Admin") {
 	$admin = filter_array($menuArs,'Admin');
 	$menu_lists = array_merge($menu_lists, $admin);
+	$menu_lists_ordered = asort($menu_lists);
 }else{
 	$menu_lists;
 }
+
+// echo "<pre>";
+// var_dump($menu_lists);
+// echo "</pre>";
+// exit();
 
 function filter_array($array, $term){
 	$filtered_levels = array();
