@@ -1,6 +1,6 @@
 <a href="?page=hasil-kesemaptaan&act=resetall" class="btn btn-sm btn-warning" onclick="return confirm('Reset semua hasil tes?\nData yang sudah dihapus tidak dapat dikembalikan.')"><i class="fa fa-fw fa-remove"></i> Reset Semua</a>
 <hr />
-<table id="datatable" class="table table-responsive table-striped table-bordered table-hover" width="100%" cellspacing="0">
+<table id="datatable-admin" class="table table-responsive table-striped table-bordered table-hover" width="100%" cellspacing="0">
 	<thead class="table-inverse">
 		<tr>
 			<th>No.</th>
