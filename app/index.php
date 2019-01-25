@@ -11,7 +11,8 @@ FROM member m
 LEFT JOIN jadwal_member jm on m.id_member = jm.id_member
 LEFT JOIN jadwal j on jm.id_jadwal = j.id_jadwal
 WHERE m.id_member = '{$_SESSION['id_member']}'
-ORDER BY j.jadwal";
+ORDER BY j.jadwal DESC
+LIMIT 1";
 $member = $db->query($uye)->fetch_assoc();
 // $member = $db->query("select * from member where id_member = '{$_SESSION['id_member']}' limit 1")->fetch_assoc();
 // var_dump($member);

@@ -13,7 +13,7 @@
 	<?php
 		$cek = $db->query("select * from tes_fisik order by id_tes desc limit 1")->fetch_assoc();
 		$no = 1;
-		$sql = "SELECT hf.*, m.nama
+		$sql = "SELECT m.id_member, m.nama, m.email, hf.id_fisik, hf.lari, hf.push_up, hf.sit_up, hf.ket
 FROM member m
 LEFT JOIN hasil_fisik hf ON hf.id_member = m.id_member
 WHERE m.id_member IN (SELECT hk.id_member FROM hasil_kesemaptaan hk WHERE hk.ket = 'lulus')";

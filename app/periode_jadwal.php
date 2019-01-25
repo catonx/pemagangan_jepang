@@ -1,13 +1,13 @@
 <?php
   $sql_get_test_status = "
-  SELECT m.id_member, jm.id_jadwal, jd.jadwal, j.created_at, count(j.id_jawaban) AS answer, x.correct
+  SELECT m.id_member, jm.id_jadwal, jd.jadwal, x.created_at, count(x.id_jadwal) AS answer, x.correct
   FROM member m
   LEFT JOIN jadwal_member jm ON jm.id_member = m.id_member
   LEFT JOIN jadwal jd ON jm.id_jadwal = jd.id_jadwal
   LEFT JOIN jawaban j ON j.id_member = m.id_member
-  LEFT JOIN ( SELECT jw.id_member, jw.id_jadwal, count(jw.id_jawaban) AS correct FROM jawaban jw, soal s WHERE jw.id_soal = s.id_soal AND jw.jawaban = s.jawaban AND jw.id_member = ".$member['id_member']." GROUP BY jw.id_member, jw.id_jadwal) AS x ON x.id_jadwal = jm.id_jadwal
+  LEFT JOIN ( SELECT jw.id_member, jw.id_jadwal, jw.created_at, count(jw.id_jawaban) AS correct FROM jawaban jw, soal s WHERE jw.id_soal = s.id_soal AND jw.jawaban = s.jawaban AND jw.id_member = ".$member['id_member']." GROUP BY jw.id_member, jw.id_jadwal, jw.created_at) AS x ON x.id_jadwal = jm.id_jadwal
   WHERE m.id_member = ".$member['id_member']."
-  GROUP BY m.id_member, jm.id_jadwal, j.created_at, x.correct
+  GROUP BY m.id_member, jm.id_jadwal, x.created_at, x.correct
   ORDER BY jd.jadwal";
 
   $get_jadwal_and_tests = $db->query($sql_get_test_status);
