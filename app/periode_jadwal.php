@@ -36,7 +36,7 @@
       if ($jadwal_and_test['correct'] >= 14){
       echo '
         <div class="alert alert-primary" role="alert">
-          <h4>Periode 1 </h3><hr>
+          <h4>Periode '.$i.' </h4><hr>
           <div class="form-group row">
             <label class="col-md-2 col-form-label">Jadwal Pilihan</label>
             <div class="col-md-4">
@@ -67,7 +67,7 @@
         if ($get_jadwal_and_tests->num_rows < 2 && !empty($jadwal_and_test['jadwal']) && !empty($jadwal_and_test['correct'])){
           echo '
           <div class="alert alert-primary" role="alert">
-            <h4>Periode '.$i.' </h3><hr>
+            <h4>Periode '.$i.' </h4><hr>
             <form method="post" action="">
               <div class="form-group row">
                 <label class="col-md-2 col-form-label">Jadwal Pilihan</label>
@@ -109,7 +109,7 @@
           <form method="post" action="">
           <div class="alert alert-primary" role="alert">
             <form method="post" action="">
-              <h4>Periode 2 </h3><hr>';
+              <h4>Periode 2 </h4><hr>';
               include 'jadwal_form.php';
           echo '
               <button type="submit" class="btn btn-primary" name="simpan" onclick="return confirm(\'Anda yakin ingin menyimpan data ini?\nData yang sudah tersimpan tidak dapat diedit.\')">Simpan</button>
@@ -119,7 +119,7 @@
         }else{
           echo '
             <div class="alert alert-primary" role="alert">
-              <h4>Periode '.$i.' </h3><hr>
+              <h4>Periode '.$i.' </h4><hr>
               <form method="post" action="">
                 <div class="form-group row">
                   <label class="col-md-2 col-form-label">Jadwal Pilihan</label>
