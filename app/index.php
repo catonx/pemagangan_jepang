@@ -42,6 +42,8 @@ $tgl_now = tanggal_indo($today);
 
     <!-- Custom styles for this template -->
     <link href="../css/dashboard.css" rel="stylesheet">
+		<!-- datetimepicker -->
+		<link rel="stylesheet" type="text/css" href="../vendor/datetimepicker/jquery.datetimepicker.css"/ >
   </head>
 
   <body>
@@ -83,13 +85,25 @@ $tgl_now = tanggal_indo($today);
 		<script src="../vendor/DataTables/datatables.min.js"></script>
 		<script src="../vendor/DataTables/TableTools.ShowSelectedOnly.js"></script>
 		<script src="../vendor/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#datatable').DataTable();
-		} );
-	</script>
-  <script src="../vendor/tinymce/tinymce.min.js"></script>
-	<script>tinymce.init({ selector:'textarea#box' });</script>
+		<script>
+			$(document).ready(function() {
+				$('#datatable').DataTable();
+			});
+		</script>
+	  <script src="../vendor/tinymce/tinymce.min.js"></script>
+		<script>tinymce.init({ selector:'textarea#box' });</script>
+
+		<!-- datetimepicker -->
+		<script src="../vendor/datetimepicker/jquery.js"></script>
+		<script src="../vendor/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#datetimepicker').datetimepicker({
+					timepicker:false,
+					format:'d-m-Y'
+				});
+			});
+		</script>
 <!--
   <script src="../vendor/jquery-countdown/jquery.countdown.min.js"></script>
 

@@ -57,7 +57,7 @@
           </div>
           <div class="form-group col-md-3">
             <label>Tanggal Lahir</label>
-            <input type="text" class="form-control" value="<?php echo $member['tgl_lahir']; ?>" name="tgl_lahir" required>
+            <input id="datetimepicker" type="text" class="form-control" value="<?php echo $member['tgl_lahir']; ?>" name="tgl_lahir" required>
             <small class="form-text text-muted">Format Tanggal: dd-mm-yyyy</small>
           </div>
           <div class="form-group col-md-3">
@@ -101,7 +101,8 @@
               <select type="text" class="form-control" name="th_pelaksanaan" required>
                 <option value=""></option>
                 <?php
-                  for($th = 2017; $th <= 2030; $th++){
+                  $year_now = date('Y');
+                  for($th = $year_now; $th <= $year_now + 5 ; $th++){
                     echo '<option value="'.$th.'"';
                     if($th == $member['th_pelaksanaan']){ echo ' selected'; }
                     echo '>'.$th.'</option>';
