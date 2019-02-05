@@ -8,12 +8,14 @@ echo '
       <label class="col-md-2 col-form-label">Jadwal Pilihan</label>
       <div class="col-md-4">
         <select type="text" class="form-control" name="id_jadwal" required><option value=""></option>';
-          $getjadwal = $db->query("select * from jadwal where publish = 'Ya' and provinsi = '{$member['provinsi']}' and jadwal >= DATE_FORMAT(now(), '%Y-%m-%d')");
+          $getjadwal = $db->query(" SELECT * FROM jadwal WHERE publish = 'Ya' AND provinsi = '{$member['provinsi']}' AND jadwal >= DATE_FORMAT(now(), '%Y-%m-%d') ORDER BY jadwal ");
           while($jadwal = $getjadwal->fetch_assoc()){
-            if ($jadwal['id_jadwal'] == $member['id_jadwal']) {
-              echo '<option value=""> - </option>';
-            }else {
-              echo '<option value="'.$jadwal['id_jadwal'].'">'.tanggal_indo($jadwal['jadwal']).'</option>';
+            for ($i=1; $i < 2 ; $i++) {
+              if ($jadwal['id_jadwal'] == $member['id_jadwal']) {
+                echo '<option value=""> - </option>';
+              }else {
+                echo '<option value="'.$jadwal['id_jadwal'].'">'.tanggal_indo($jadwal['jadwal']).'</option>';
+              }
             }
 
           }

@@ -13,17 +13,10 @@
 	<?php
 		$cek = $db->query("select * from tes_fisik order by id_tes desc limit 1")->fetch_assoc();
 		$no = 1;
-		$sql = "select m.*, hf.ket from member m
-						left join hasil_fisik hf
-						on m.id_member = hf.id_member
-						where m.id_member in (SELECT x.id_member FROM (SELECT j.id_member, m.nama , m.provinsi, j.id_jadwal , jw.jadwal, count(j.jawaban) AS jawaban
-FROM jawaban j
-LEFT JOIN soal s ON s.id_soal = j.id_soal
-LEFT JOIN jadwal jw ON jw.id_jadwal = j.id_jadwal
-LEFT JOIN member m ON j.id_member = m.id_member
-WHERE s.jawaban = j.jawaban
-GROUP BY j.id_member, j.id_jadwal) AS X
-WHERE x.jawaban >= 14) order by nama";
+		$sql = "SELECT hf.*, m.nama
+FROM member m
+LEFT JOIN hasil_fisik hf ON hf.id_member = m.id_member
+WHERE m.id_member IN (SELECT hk.id_member FROM hasil_kesemaptaan hk WHERE hk.ket = 'lulus')";
 		$query = $db->query($sql);
 		while($data = $query->fetch_assoc()){
 			echo '<tr>

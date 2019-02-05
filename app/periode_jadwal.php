@@ -7,10 +7,12 @@
   LEFT JOIN jawaban j ON j.id_jadwal = jd.id_jadwal
   LEFT JOIN ( SELECT jw.id_member, jw.id_jadwal, count(jw.id_jawaban) AS correct FROM jawaban jw, soal s WHERE jw.id_soal = s.id_soal AND jw.jawaban = s.jawaban GROUP BY jw.id_member, jw.id_jadwal) AS x ON x.id_jadwal = jm.id_jadwal
   WHERE m.id_member = ".$member['id_member']."
-  GROUP BY m.id_member, jm.id_jadwal, j.created_at, x.correct";
+  GROUP BY m.id_member, jm.id_jadwal, j.created_at, x.correct
+  ORDER BY jd.jadwal";
 
   $get_jadwal_and_tests = $db->query($sql_get_test_status);
   $row = $db->query($sql_get_test_status)->fetch_assoc();
+  // $count_row = $row->num_rows;
   // echo '<pre>';
   // var_dump($get_jadwal_and_tests->num_rows);
   // echo '</pre>';
@@ -62,7 +64,7 @@
         </div>';
 
       }else {
-        if ($get_jadwal_and_tests->num_rows == 1 && !empty($jadwal_and_test['jadwal']) && !empty($jadwal_and_test['correct'])){
+        if ($get_jadwal_and_tests->num_rows < 2 && !empty($jadwal_and_test['jadwal']) && !empty($jadwal_and_test['correct'])){
           echo '
           <div class="alert alert-primary" role="alert">
             <h4>Periode '.$i.' </h3><hr>

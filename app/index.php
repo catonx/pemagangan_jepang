@@ -6,12 +6,12 @@ if(empty($_SESSION['id_member']) || !isset($_SESSION['id_member'])){
 	header('location: ../');
 }
 // concat(j.tgl,'-',j.bln,'-',j.thn) as jadwal
-$uye = "select m.*, j.jadwal, j.id_jadwal
-from member m
-left join jadwal_member jm on m.id_member = jm.id_member
-left join jadwal j on jm.id_jadwal = j.id_jadwal
-where m.id_member = '{$_SESSION['id_member']}'
-ORDER BY j.id_jadwal DESC";
+$uye = "SELECT m.*, j.jadwal, j.id_jadwal
+FROM member m
+LEFT JOIN jadwal_member jm on m.id_member = jm.id_member
+LEFT JOIN jadwal j on jm.id_jadwal = j.id_jadwal
+WHERE m.id_member = '{$_SESSION['id_member']}'
+ORDER BY j.jadwal";
 $member = $db->query($uye)->fetch_assoc();
 // $member = $db->query("select * from member where id_member = '{$_SESSION['id_member']}' limit 1")->fetch_assoc();
 // var_dump($member);

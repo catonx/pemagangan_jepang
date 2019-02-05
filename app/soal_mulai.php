@@ -9,7 +9,7 @@ LEFT JOIN jawaban j ON j.id_jadwal = jd.id_jadwal
 LEFT JOIN ( SELECT jw.id_member, jw.id_jadwal, count(jw.id_jawaban) AS correct FROM jawaban jw, soal s WHERE jw.id_soal = s.id_soal AND jw.jawaban = s.jawaban GROUP BY jw.id_member, jw.id_jadwal) AS x ON x.id_jadwal = jm.id_jadwal
 WHERE m.id_member = ".$member['id_member']."
 GROUP BY m.id_member, jm.id_jadwal, j.created_at, x.correct
-";
+ORDER BY jd.jadwal";
 // $getresult = $db->query("select * from jawaban where id_member = '{$member['id_member']}'");
 
 $getresult = $db->query($sql_check);
@@ -225,15 +225,56 @@ if($_GET['page'] == 'soal' && empty($_GET['act'])){
       $form_data = [];
       echo '<form id="form_soal" method="post" action=""><div class="card-body">';
       $no = 1;
-      $sql = "SELECT * FROM soal s WHERE s.publish = 'Ya' ORDER BY RAND() LIMIT 20";
-      $sql_temp = $db->query($sql);
+      // $sql = "SELECT * FROM soal s WHERE s.publish = 'Ya' ORDER BY RAND() LIMIT 20";
+
+      $sql_temp_cat_1 = $db->query("SELECT s.id_soal FROM soal s WHERE s.publish = 'Ya' AND s.id_kategori = 2 ORDER BY RAND() LIMIT 5");
+      $sql_temp_cat_2 = $db->query("SELECT s.id_soal FROM soal s WHERE s.publish = 'Ya' AND s.id_kategori = 3 ORDER BY RAND() LIMIT 5");
+      $sql_temp_cat_3 = $db->query("SELECT s.id_soal FROM soal s WHERE s.publish = 'Ya' AND s.id_kategori = 4 ORDER BY RAND() LIMIT 5");
+      $sql_temp_cat_4 = $db->query("SELECT s.id_soal FROM soal s WHERE s.publish = 'Ya' AND s.id_kategori = 5 ORDER BY RAND() LIMIT 5");
+      $array_soal_1 = [];
+      $array_soal_2 = [];
+      $array_soal_3 = [];
+      $array_soal_4 = [];
+      // $array_soal_5 = [];
+      $array_soal_ids = [];
       $array_soal = [];
 
       if (!isset($_SESSION["soal"])) {
          //jika session tidak ada
-         while ($row = $sql_temp->fetch_assoc()) {
+         while ($row1 = $sql_temp_cat_1->fetch_assoc()) {
+           $array_soal_1[] = $row1["id_soal"];
+         }
+
+         while ($row2 = $sql_temp_cat_2->fetch_assoc()) {
+           $array_soal_2[] = $row2["id_soal"];
+         }
+         while ($row3 = $sql_temp_cat_3->fetch_assoc()) {
+           $array_soal_3[] = $row3["id_soal"];
+         }
+         while ($row4 = $sql_temp_cat_4->fetch_assoc()) {
+           $array_soal_4[] = $row4["id_soal"];
+         }
+
+         $array_soal_ids = array_merge($array_soal_1, $array_soal_2, $array_soal_3, $array_soal_4);
+
+         $thePostIdArray = implode(', ', $array_soal_ids);
+
+         $sql = $db->query("SELECT * FROM soal s WHERE s.id_soal IN ($thePostIdArray) ORDER BY RAND()");
+         while ($row = $sql->fetch_assoc()) {
            $array_soal[] = $row;
          }
+
+         // echo "<pre>";
+         // var_dump($array_soal_1);
+         // var_dump($array_soal_2);
+         // var_dump($array_soal_3);
+         // var_dump($array_soal_4);
+         // print($array_soal_ids);
+         // print_r($thePostIdArray);
+         // print_r($array_soal);
+         // echo "</pre>";
+         // exit;
+
          $_SESSION["soal"] = $array_soal;
       } else {
         $array_soal = $_SESSION["soal"];
